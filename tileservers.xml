@@ -1,15 +1,15 @@
 <cacamap>
 	<server default="default">
-		<name>OpenStreetMap</name>
-		<url><![CDATA[https://a.tile.openstreetmap.de/%z/%x/%y.png]]></url>
-		<folder>osm</folder>
+		<name>stamen - toner</name>
+		<url><![CDATA[http://d.tile.stamen.com/toner/%z/%x/%y.png]]></url>
+		<folder>stamen_toner</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
-		<tile><![CDATA[%y.png]]></tile>
+		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>Google Satellite</name>
-		<url><![CDATA[http://khms2.google.com/kh/v=862&x=%x&y=%y&z=%z]]></url>
-		<folder>gsat</folder>
+		<name>stamen - terrain</name>
+		<url><![CDATA[http://c.tile.stamen.com/terrain/%z/%x/%y.png]]></url>
+		<folder>stamen_terrain</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>
@@ -21,38 +21,45 @@
 		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>Wikimedia</name>
-		<url><![CDATA[https://maps.wikimedia.org/osm-intl/%z/%x/%y.png]]></url>
-		<folder>wikimedia</folder>
+		<name>Google terrain</name>
+		<url><![CDATA[http://mt1.google.com/vt/lyrs=y&x=%x&y=%y&z=%z]]></url>
+		<folder>gmaps_terrain</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>wmflabs(bw-mapnik)</name>
-		<url><![CDATA[https://tiles.wmflabs.org/bw-mapnik/%z/%x/%y.png]]></url>
-		<folder>wmflabs</folder>
+		<name>ESRI geographic</name>
+		<url><![CDATA[https://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer/tile/%z/%y/%x]]></url>
+		<folder>esri_geo</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>stamen(toner)</name>
-		<url><![CDATA[http://d.tile.stamen.com/toner/%z/%x/%y.png]]></url>
-		<folder>stamen_toner</folder>
+		<name>ESRI streets</name>
+		<url><![CDATA[https://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer/tile/%z/%y/%x]]></url>
+		<folder>esri_streets</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>stamen(watercolor)</name>
-		<url><![CDATA[http://b.tile.stamen.com/watercolor/%z/%x/%y.jpg]]></url>
-		<folder>stamen_watercolor</folder>
+		<name>ESRI satelite</name>
+		<url><![CDATA[https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/%z/%y/%x]]></url>
+		<folder>esri_satelite</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>stamen(terrain)</name>
-		<url><![CDATA[http://c.tile.stamen.com/terrain/%z/%x/%y.png]]></url>
-		<folder>stamen_terrain</folder>
+		<name>ESRI topo</name>
+		<url><![CDATA[https://services.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer/tile/%z/%y/%x]]></url>
+		<folder>esri_topo</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>
-</cacamap> 
+	<server>
+		<name>Cardo DB positron</name>
+		<url><![CDATA[http://basemaps.cartocdn.com/light_all/%z/%x/%y.png]]></url>
+		<folder>cardo_pos</folder>
+		<filepath><![CDATA[/%z/%x/]]></filepath>
+		<tile><![CDATA[%y.]]></tile>
+	</server>
+</cacamap>

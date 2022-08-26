@@ -19,7 +19,7 @@ GNU General Public License for more details.
 
 #ifndef CACAMAP_H
 #define CACAMAP_H
-#include <QtGui>
+#include <QtWidgets>
 #include <QtNetwork>
 #include <iostream>
 #include <vector>
@@ -98,6 +98,8 @@ public:
 	QStringList getServerNames();
 	void setServer(int);
 	int getZoom();
+    quint32 cacheSize;/**< current %tile cache size in bytes. */
+    void clearCache();
 
 private:
 	QNetworkAccessManager *manager;/**< manages http requests. */
@@ -123,7 +125,6 @@ protected:
 	int maxZoom;/**< Maximum zoom level (closest).*/
 
 	int tileSize; /**< size in px of the square %tile. */
-	quint32 cacheSize;/**< current %tile cache size in bytes. */
 	//check QtMobility QGeoCoordinate
 	QPointF geocoords; /**< current longitude and latitude. */
 	QPixmap* imgBuffer;

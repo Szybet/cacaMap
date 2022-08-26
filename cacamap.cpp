@@ -14,6 +14,7 @@ GNU General Public License for more details.
 */
 
 #include "cacamap.h"
+#include <QtWidgets>
 
 using namespace std;
 /**
@@ -88,22 +89,22 @@ QPointF myMercator::pixelToGeoCoord(longPoint const &pixelcoord, int zoom, int t
 */
 cacaMap::cacaMap(QWidget* parent):QWidget(parent)
 {
-	cout<<"cacamap constructor"<<endl;
 	if (!servermgr.loadConfigFile("tileservers.xml"))
 	{
 		std::cout<<"error loading server file."<<std::endl;
 	}
 	cacheSize = 0;
 	maxZoom = 18;
-	minZoom = 0;
-	folder = QDir::currentPath();
+    minZoom = 0;
+    folder = QDir::currentPath();
+    clearCache();
 	loadCache();
-	geocoords = QPointF(23.8564,61.4667);
+    geocoords = QPointF(15.8564,61.4667);
 	downloading = false;
 	tileSize = 256;
-	zoom = 14;
+    zoom = 3;
 	manager = new QNetworkAccessManager(this);
-	loadingAnim.setFileName("loading.gif");
+    loadingAnim.setFileName("loading.png");
 	loadingAnim.setScaledSize(QSize(tileSize,tileSize));
 	loadingAnim.start();
 	notAvailableTile.load("notavailable.jpeg");
@@ -132,6 +133,7 @@ bool cacaMap::zoomIn()
 		zoom++;
 		downloadQueue.clear();
 		updateContent();
+        //qDebug() << "Zooming in";
 		return true;
 	}
 	return false;
@@ -147,6 +149,7 @@ bool cacaMap::zoomOut()
 		zoom--;
 		downloadQueue.clear();
 		updateContent();
+        //qDebug() << "Zooming out";
 		return true;
 	}
 	return false;
@@ -253,7 +256,7 @@ QPixmap cacaMap::getTilePatch(int zoom, quint32 x, quint32 y, int offx, int offy
 			}
 			else
 			{
-				cout<<"no file found "<<path.toStdString()<<fileName.toStdString()<<endl;
+                qDebug() << "no file found "<< path << fileName;
 			}
 		}
 		else
@@ -285,10 +288,11 @@ void cacaMap::downloadPicture()
 			QString surl = nextItem.url;
 			QNetworkRequest request;
 			request.setUrl(QUrl(surl));
+            // qDebug() << surl;
 			QNetworkReply *reply = manager->get(request);
-			connect(reply, SIGNAL(error(QNetworkReply::NetworkError)),this, SLOT(slotError(QNetworkReply::NetworkError)));
+            //connect(reply, SIGNAL(error(QNetworkReply::NetworkError)),this, SLOT(slotError(QNetworkReply::NetworkError)));
 			connect(manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(slotDownloadReady(QNetworkReply*)));
-			connect(reply, SIGNAL(downloadProgress(qint64,qint64)),this, SLOT(slotDownloadProgress(qint64, qint64)));
+            //connect(reply, SIGNAL(downloadProgress(qint64,qint64)),this, SLOT(slotDownloadProgress(qint64, qint64)));
 		}
 		else
 		{
@@ -297,7 +301,7 @@ void cacaMap::downloadPicture()
 	}
 	else
 	{
-		cout<<"another download is already in progress... "<<endl;
+        //cout<<"another download is already in progress... "<<endl;
 	}
 }
 /**
@@ -305,7 +309,6 @@ Populates the cache list by checking the existing files on the cache folder
 */
 void cacaMap::loadCache()
 {
-	cacheSize=0;
 	unavailableTiles.clear();
 	tileCache.clear();
 	QDir::setCurrent(folder);
@@ -331,7 +334,6 @@ void cacaMap::loadCache()
 					for(int k=0; k< latitudes.size(); k++)
 					{
 						lat = latitudes.at(k).baseName();
-						cacheSize+= latitudes.at(k).size();
 						QString name = zoomLevel+"."+lon+"."+lat;
 						tileCache.insert(name,1);
 					}
@@ -341,7 +343,6 @@ void cacaMap::loadCache()
 			}
 		}
 		QDir::setCurrent(folder);
-		cout<<"cache size "<<(float)cacheSize/1024/1024<<" MB"<<endl;
 	}
 }
 
@@ -387,6 +388,15 @@ void cacaMap::slotDownloadReady(QNetworkReply * _reply)
 			QUrl url = req.url();
 			QString surl = url.toString();
 			cacheSize+=bytes;
+
+            // Here it looks if its too big
+            // 30 * 1024 * 1024 = 31457280
+            //qDebug() << "Cache size is: " << cacheSize;
+            if(cacheSize > 31457280.0) {
+                qDebug() << "Size is too big, clearing";
+                clearCache();
+            }
+
 			//get image data
 			QByteArray data = _reply->readAll();		
 			if (found)
@@ -401,6 +411,7 @@ void cacaMap::slotDownloadReady(QNetworkReply * _reply)
 				QDir dir;
 				if (!dir.exists("cache"))
 				{
+                    qDebug() << "Creating dir cache";
 					dir.mkdir("cache");
 				}
 				dir.cd("cache");
@@ -477,7 +488,7 @@ Slot that gets called when theres is an network error
 */
 void cacaMap::slotError(QNetworkReply::NetworkError _code)
 {
-	cout<<"some error "<<_code<<endl;
+    // cout<<"some error "<<_code<<endl;
 }
 /**
 Widget resize event handler
@@ -655,4 +666,18 @@ void cacaMap::updateContent()
 {
 	updateTilesToRender();
 	updateBuffer();
+    update();
+}
+
+void cacaMap::clearCache() {
+    // https://stackoverflow.com/questions/14754977/delete-all-files-in-a-directory
+    qDebug() << "Removing everything";
+    QDir dir("cache");
+    dir.setFilter(QDir::AllDirs | QDir::NoDotAndDotDot);
+    foreach(QString dirName, dir.entryList())
+    {
+       qDebug() << "Removing: " << dirName;
+       QDir("cache/" + dirName).removeRecursively();
+    }
+    cacheSize = 0;
 }

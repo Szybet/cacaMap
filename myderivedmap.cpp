@@ -1,31 +1,20 @@
 #include "myderivedmap.h"
+#include <QWidget>
+
 using namespace std;
 
 myDerivedMap::myDerivedMap(QWidget* parent):cacaMap(parent)
 {
-	cout<<"derived constructor"<<endl;
-	timer = new QTimer(this);
 	mindistance = 0.025;
 	animrate = 0.5;	
 	
 	hlayout = new QHBoxLayout;
-
-	slider = new QSlider(Qt::Vertical,this);
-	slider->setTickPosition(QSlider::TicksBothSides);
-	slider->setMaximum(maxZoom);
-	slider->setMinimum(minZoom);
-	slider->setSliderPosition(zoom);
-	connect(slider, SIGNAL(valueChanged(int)),this, SLOT(updateZoom(int)));
 	
-	hlayout->addWidget(slider);
-	hlayout->addStretch();
 	setLayout(hlayout);
-
 }
 
 myDerivedMap::~myDerivedMap()
 {
-	delete slider;
 	delete hlayout;
 }
 
@@ -67,38 +56,42 @@ void myDerivedMap::mouseDoubleClickEvent(QMouseEvent* e)
 		newpospx.x = currpospx.x + deltapx.x();
 		newpospx.y = currpospx.y + deltapx.y();
 		destination = myMercator::pixelToGeoCoord(newpospx,zoom,tileSize);
-		connect(timer,SIGNAL(timeout()),this,SLOT(zoomAnim()));
-		timer->start(40);
+        zoomAnim();
 	}
 	//do a simple zoom out for now
 	else if (e->button() == Qt::RightButton)
 	{
 		zoomOut();
-		slider->setSliderPosition(zoom);
+        if(scrollBarReady == true)
+        {
+            zoomScrollbar->setSliderPosition(zoom);
+        }
 		update();
 	}
 }
 
 void myDerivedMap::zoomAnim()
 {
-	float delta = buffzoomrate - 0.5;
-	if (delta > mindistance)
-	{
-		QPointF deltaSpace = destination - geocoords;
-		geocoords+=animrate*deltaSpace;
-		buffzoomrate-= delta*animrate; 
-		updateContent();
-	}
+    //float delta = buffzoomrate - 0.5;
+    //if (delta > mindistance)
+    //{
+    //	QPointF deltaSpace = destination - geocoords;
+    //	geocoords+=animrate*deltaSpace;
+    //	buffzoomrate-= delta*animrate;
+    //
+    //}
 	//you are already there
-	else
-	{
-		timer->stop();
-		disconnect(timer,SIGNAL(timeout()),this,SLOT(zoomAnim()));
-		geocoords = destination;
-		buffzoomrate = 1.0;
-		zoomIn();
-		slider->setSliderPosition(zoom);
-	}
+    //else
+    //{
+    geocoords = destination;
+    buffzoomrate = 1.0;
+    zoomIn();
+    if(scrollBarReady == true)
+    {
+        zoomScrollbar->setSliderPosition(zoom);
+    }
+    //}
+    updateContent();
 	update();
 }
 void myDerivedMap::updateZoom(int newZoom)
@@ -106,7 +99,16 @@ void myDerivedMap::updateZoom(int newZoom)
 	setZoom(newZoom);
 	update();
 }
+
 void myDerivedMap::paintEvent(QPaintEvent *e)
 {
 	cacaMap::paintEvent(e);
+}
+
+void myDerivedMap::applyScrollbarSettings() {
+    zoomScrollbar->setMaximum(maxZoom);
+    zoomScrollbar->setMinimum(minZoom);
+    zoomScrollbar->setSliderPosition(zoom);
+    connect(zoomScrollbar, SIGNAL(valueChanged(int)),this, SLOT(updateZoom(int)));
+    scrollBarReady = true;
 }

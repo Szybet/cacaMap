@@ -15,7 +15,7 @@ GNU General Public License for more details.
 #ifndef TESTWIDGET_H
 #define TESTWIDGET_H
 
-#include <QtGui>
+#include <QtWidgets>
 #include "myderivedmap.h"
 #include <iostream>
 
