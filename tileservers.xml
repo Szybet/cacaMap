@@ -1,64 +1,64 @@
 <cacamap>
 	<server default="default">
-		<name>stamen - toner</name>
+		<name>Stamen - Toner</name>
 		<url><![CDATA[http://d.tile.stamen.com/toner/%z/%x/%y.png]]></url>
 		<folder>stamen_toner</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>stamen - terrain</name>
+		<name>Stamen - Terrain</name>
 		<url><![CDATA[http://c.tile.stamen.com/terrain/%z/%x/%y.png]]></url>
 		<folder>stamen_terrain</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>Google Maps</name>
+		<name>Google Maps - Default</name>
 		<url><![CDATA[http://mt1.google.com/vt/x=%x&y=%y&z=%z]]></url>
-		<folder>gmaps</folder>
+		<folder>google_maps</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>Google terrain</name>
+		<name>Google Maps - Satellite</name>
 		<url><![CDATA[http://mt1.google.com/vt/lyrs=y&x=%x&y=%y&z=%z]]></url>
-		<folder>gmaps_terrain</folder>
+		<folder>google_maps_satellite</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>ESRI geographic</name>
+		<name>ESRI Geographic - Default</name>
 		<url><![CDATA[https://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer/tile/%z/%y/%x]]></url>
-		<folder>esri_geo</folder>
+		<folder>esri_default</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>ESRI streets</name>
+		<name>ESRI Geographic - Streets</name>
 		<url><![CDATA[https://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer/tile/%z/%y/%x]]></url>
 		<folder>esri_streets</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>ESRI satelite</name>
+		<name>ESRI Geographic - Satellite</name>
 		<url><![CDATA[https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/%z/%y/%x]]></url>
-		<folder>esri_satelite</folder>
+		<folder>esri_satellite</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>ESRI topo</name>
+		<name>ESRI Geographic - Topographic</name>
 		<url><![CDATA[https://services.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer/tile/%z/%y/%x]]></url>
-		<folder>esri_topo</folder>
+		<folder>esri_topographic</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>Cardo DB positron</name>
+		<name>Cardo DB - Positron</name>
 		<url><![CDATA[http://basemaps.cartocdn.com/light_all/%z/%x/%y.png]]></url>
-		<folder>cardo_pos</folder>
+		<folder>cardo_db_positron</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>

@@ -100,6 +100,7 @@ public:
 	int getZoom();
     quint32 cacheSize;/**< current %tile cache size in bytes. */
     void clearCache();
+    const QString cacheDirPath = "/app-temp/cache";
 
 private:
 	QNetworkAccessManager *manager;/**< manages http requests. */

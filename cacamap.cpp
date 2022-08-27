@@ -313,7 +313,7 @@ void cacaMap::loadCache()
 	tileCache.clear();
 	QDir::setCurrent(folder);
 	QDir dir;
-	if (dir.cd("cache"))
+    if (dir.cd(cacheDirPath))
 	{
 		if (dir.cd(servermgr.tileCacheFolder()))
 		{
@@ -409,12 +409,12 @@ void cacaMap::slotDownloadReady(QNetworkReply * _reply)
 
 				QDir::setCurrent(folder);
 				QDir dir;
-				if (!dir.exists("cache"))
+                if (!dir.exists(cacheDirPath))
 				{
                     qDebug() << "Creating dir cache";
-					dir.mkdir("cache");
+                    dir.mkdir(cacheDirPath);
 				}
-				dir.cd("cache");
+                dir.cd(cacheDirPath);
 				if (!dir.exists(servermgr.tileCacheFolder()))
 				{
 					dir.mkdir(servermgr.tileCacheFolder());
@@ -672,12 +672,12 @@ void cacaMap::updateContent()
 void cacaMap::clearCache() {
     // https://stackoverflow.com/questions/14754977/delete-all-files-in-a-directory
     qDebug() << "Removing everything";
-    QDir dir("cache");
+    QDir dir(cacheDirPath);
     dir.setFilter(QDir::AllDirs | QDir::NoDotAndDotDot);
     foreach(QString dirName, dir.entryList())
     {
-       qDebug() << "Removing: " << dirName;
-       QDir("cache/" + dirName).removeRecursively();
+       qDebug() << "Removing:" << dirName;
+       QDir(cacheDirPath + dirName).removeRecursively();
     }
     cacheSize = 0;
 }
