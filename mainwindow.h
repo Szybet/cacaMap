@@ -26,6 +26,8 @@ private slots:
 
     void on_exitBtn_clicked();
 
+    void on_refreshBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     myDerivedMap* map = new myDerivedMap(this);

@@ -89,7 +89,7 @@ QPointF myMercator::pixelToGeoCoord(longPoint const &pixelcoord, int zoom, int t
 */
 cacaMap::cacaMap(QWidget* parent):QWidget(parent)
 {
-	if (!servermgr.loadConfigFile("tileservers.xml"))
+	if (!servermgr.loadConfigFile(":/resources/tileservers.xml"))
 	{
 		std::cout<<"error loading server file."<<std::endl;
 	}
@@ -99,15 +99,14 @@ cacaMap::cacaMap(QWidget* parent):QWidget(parent)
     folder = QDir::currentPath();
     clearCache();
 	loadCache();
-    geocoords = QPointF(15.8564,61.4667);
+    geocoords = QPointF(51.48512026044142, -0.009275747546236423);
 	downloading = false;
 	tileSize = 256;
     zoom = 3;
 	manager = new QNetworkAccessManager(this);
-    loadingAnim.setFileName("loading.png");
 	loadingAnim.setScaledSize(QSize(tileSize,tileSize));
 	loadingAnim.start();
-	notAvailableTile.load("notavailable.jpeg");
+    notAvailableTile.load(":/icons/icons/error.png");
 	imgBuffer = new QPixmap(size());
 	buffzoomrate = 1.0;
 }
@@ -213,7 +212,7 @@ int cacaMap::getZoom()
 */
 QString cacaMap::getTilePath(int zoom,qint32 x)
 {
-	return "cache/"+servermgr.tileCacheFolder()+servermgr.filePath(zoom,x);
+    return cacheDirPath + servermgr.tileCacheFolder()+servermgr.filePath(zoom,x);
 }
 
 /**
@@ -244,7 +243,7 @@ QPixmap cacaMap::getTilePatch(int zoom, quint32 x, quint32 y, int offx, int offy
 		{
 			//render the tile
 			QDir::setCurrent(folder);
-			QString path= getTilePath(zoom-1,parentx) ;
+            QString path = getTilePath(zoom-1,parentx) ;
 			QString fileName = servermgr.fileName(parenty);
 			QDir::setCurrent(path);
 			QFile f(fileName);

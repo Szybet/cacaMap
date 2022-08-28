@@ -28,28 +28,28 @@
 		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>ESRI Geographic - Default</name>
+		<name>ESRI - Default</name>
 		<url><![CDATA[https://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer/tile/%z/%y/%x]]></url>
 		<folder>esri_default</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>ESRI Geographic - Streets</name>
+		<name>ESRI - Streets</name>
 		<url><![CDATA[https://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer/tile/%z/%y/%x]]></url>
 		<folder>esri_streets</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>ESRI Geographic - Satellite</name>
+		<name>ESRI - Satellite</name>
 		<url><![CDATA[https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/%z/%y/%x]]></url>
 		<folder>esri_satellite</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>
 		<tile><![CDATA[%y.]]></tile>
 	</server>
 	<server>
-		<name>ESRI Geographic - Topographic</name>
+		<name>ESRI Geographic</name>
 		<url><![CDATA[https://services.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer/tile/%z/%y/%x]]></url>
 		<folder>esri_topographic</folder>
 		<filepath><![CDATA[/%z/%x/]]></filepath>

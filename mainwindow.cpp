@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // Stylesheet
-    QFile stylesheetFile("/mnt/onboard/.adds/inkbox/eink.qss");
+    QFile stylesheetFile("/etc/eink.qss");
     stylesheetFile.open(QFile::ReadOnly);
     this->setStyleSheet(stylesheetFile.readAll());
     stylesheetFile.close();
@@ -49,4 +49,10 @@ void MainWindow::on_exitBtn_clicked()
     map->deleteLater();
     map->close();
     QApplication::quit();
+}
+
+void MainWindow::on_refreshBtn_clicked()
+{
+    // Refreshes eInk screen
+    this->repaint();
 }
